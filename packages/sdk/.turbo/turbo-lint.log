@@ -1,0 +1,4 @@
+
+> @asdev/sdk@0.1.0 lint /home/dev/Project_Me/asdev_lap/packages/sdk
+> eslint src tests --ext .ts
+

@@ -1,0 +1,4 @@
+
+> @asdev/connector-ir-payment@0.1.0 typecheck /home/dev/Project_Me/asdev_lap/packages/connectors/ir-payment
+> tsc --noEmit -p tsconfig.json
+

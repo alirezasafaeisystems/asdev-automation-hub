@@ -1,0 +1,194 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  OWNER
+  ADMIN
+  OPERATOR
+  VIEWER
+}
+
+enum CaseType {
+  ORDER
+  BOOKING
+  B2B_INVOICE
+}
+
+enum RunStatus {
+  PENDING
+  RUNNING
+  SUCCEEDED
+  FAILED
+}
+
+enum StepStatus {
+  PENDING
+  RUNNING
+  SUCCEEDED
+  FAILED
+}
+
+model User {
+  id           String       @id @default(cuid())
+  email        String       @unique
+  createdAt    DateTime     @default(now())
+  memberships  Membership[]
+  workflows    Workflow[]   @relation("WorkflowCreatedBy")
+  auditLogs    AuditLog[]   @relation("AuditActor")
+}
+
+model Workspace {
+  id           String       @id @default(cuid())
+  name         String
+  createdAt    DateTime     @default(now())
+  memberships  Membership[]
+  workflows    Workflow[]
+  runs         Run[]
+  connections  Connection[]
+  auditLogs    AuditLog[]
+  cases        Case[]
+  messages     Message[]
+}
+
+model Membership {
+  id           String     @id @default(cuid())
+  userId       String
+  workspaceId  String
+  role         Role
+  user         User       @relation(fields: [userId], references: [id])
+  workspace    Workspace  @relation(fields: [workspaceId], references: [id])
+
+  @@unique([userId, workspaceId])
+}
+
+model Workflow {
+  id           String            @id @default(cuid())
+  workspaceId  String
+  name         String
+  isActive     Boolean           @default(false)
+  createdById  String
+  createdAt    DateTime          @default(now())
+  workspace    Workspace         @relation(fields: [workspaceId], references: [id])
+  createdBy    User              @relation("WorkflowCreatedBy", fields: [createdById], references: [id])
+  versions     WorkflowVersion[]
+  runs         Run[]
+}
+
+model WorkflowVersion {
+  id           String    @id @default(cuid())
+  workflowId   String
+  version      Int
+  dslJson      Json
+  publishedAt  DateTime?
+  createdAt    DateTime  @default(now())
+  workflow     Workflow  @relation(fields: [workflowId], references: [id])
+  runs         Run[]
+
+  @@unique([workflowId, version])
+}
+
+model Run {
+  id                 String       @id @default(cuid())
+  workspaceId        String
+  workflowId         String
+  workflowVersionId  String
+  status             RunStatus    @default(PENDING)
+  triggerPayload     Json?
+  startedAt          DateTime?
+  finishedAt         DateTime?
+  createdAt          DateTime     @default(now())
+  workspace          Workspace    @relation(fields: [workspaceId], references: [id])
+  workflow           Workflow     @relation(fields: [workflowId], references: [id])
+  workflowVersion    WorkflowVersion @relation(fields: [workflowVersionId], references: [id])
+  stepRuns           StepRun[]
+}
+
+model StepRun {
+  id             String      @id @default(cuid())
+  runId          String
+  stepId         String
+  status         StepStatus  @default(PENDING)
+  attempt        Int         @default(1)
+  inputJson      Json?
+  outputJson     Json?
+  errorMessage   String?
+  startedAt      DateTime?
+  finishedAt     DateTime?
+  createdAt      DateTime    @default(now())
+  run            Run         @relation(fields: [runId], references: [id])
+
+  @@index([runId, stepId])
+}
+
+model AuditLog {
+  id           String     @id @default(cuid())
+  workspaceId  String
+  actorUserId  String?
+  action       String
+  entityType   String
+  entityId     String
+  payload      Json?
+  createdAt    DateTime   @default(now())
+  workspace    Workspace  @relation(fields: [workspaceId], references: [id])
+  actorUser    User?      @relation("AuditActor", fields: [actorUserId], references: [id])
+}
+
+model Connection {
+  id                String     @id @default(cuid())
+  workspaceId       String
+  name              String
+  provider          String
+  encryptedSecret   String
+  createdAt         DateTime   @default(now())
+  updatedAt         DateTime   @updatedAt
+  workspace         Workspace  @relation(fields: [workspaceId], references: [id])
+}
+
+model Case {
+  id             String           @id @default(cuid())
+  workspaceId    String
+  type           CaseType
+  title          String
+  payload        Json?
+  createdAt      DateTime         @default(now())
+  workspace      Workspace        @relation(fields: [workspaceId], references: [id])
+  paymentIntents PaymentIntent[]
+}
+
+model PaymentIntent {
+  id            String           @id @default(cuid())
+  caseId         String
+  amount         Decimal          @db.Decimal(18, 2)
+  currency       String           @default("IRR")
+  status         String
+  createdAt      DateTime         @default(now())
+  case           Case             @relation(fields: [caseId], references: [id])
+  attempts       PaymentAttempt[]
+}
+
+model PaymentAttempt {
+  id               String        @id @default(cuid())
+  paymentIntentId  String
+  providerRef      String?
+  status           String
+  errorCode        String?
+  createdAt        DateTime      @default(now())
+  paymentIntent    PaymentIntent @relation(fields: [paymentIntentId], references: [id])
+}
+
+model Message {
+  id           String     @id @default(cuid())
+  workspaceId  String
+  channel      String
+  recipient    String
+  body         String
+  status       String
+  createdAt    DateTime   @default(now())
+  workspace    Workspace  @relation(fields: [workspaceId], references: [id])
+}

@@ -1,0 +1,4 @@
+
+> @asdev/sdk@0.1.0 build /home/dev/Project_Me/asdev_lap/packages/sdk
+> tsc -p tsconfig.json
+

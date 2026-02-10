@@ -1,0 +1,14 @@
+{
+  "key": "core",
+  "name": "core connector",
+  "version": "0.1.0",
+  "auth": {
+    "type": "apiKey"
+  },
+  "actions": [
+    {
+      "name": "run",
+      "operation": "run"
+    }
+  ]
+}
