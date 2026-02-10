@@ -1,4 +1,0 @@
-
-> @asdev/runner@0.1.0 typecheck /home/dev/Project_Me/asdev_lap/apps/runner
-> tsc --noEmit -p tsconfig.json
-

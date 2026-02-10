@@ -1,4 +1,0 @@
-
-> @asdev/runner@0.1.0 lint /home/dev/Project_Me/asdev_lap/apps/runner
-> eslint src tests --ext .ts
-

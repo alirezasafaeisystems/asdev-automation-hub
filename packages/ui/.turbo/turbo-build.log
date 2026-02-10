@@ -1,4 +1,0 @@
-
-> @asdev/ui@0.1.0 build /home/dev/Project_Me/asdev_lap/packages/ui
-> tsc -p tsconfig.json
-

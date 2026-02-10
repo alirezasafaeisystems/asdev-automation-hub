@@ -1,4 +1,0 @@
-
-> @asdev/config@0.1.0 lint /home/dev/Project_Me/asdev_lap/packages/config
-> eslint src --ext .ts
-
