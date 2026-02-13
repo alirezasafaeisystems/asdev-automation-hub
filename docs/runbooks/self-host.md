@@ -23,3 +23,4 @@ curl -fsS http://localhost:4000/health
 ## Notes
 - Connector credentials are optional; when missing, connectors run in deterministic mock mode.
 - For production, replace default secrets and use managed Postgres credentials.
+- Rotate runtime/application secrets via: `docs/runbooks/secrets-rotation.md`.

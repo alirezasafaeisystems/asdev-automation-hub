@@ -8,3 +8,4 @@
 - Webhook secrets + validation
 - Workspace-scoped RBAC checks
 - Dependency audit in CI
+- Secrets rotation runbook: `docs/runbooks/secrets-rotation.md`

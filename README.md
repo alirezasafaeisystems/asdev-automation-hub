@@ -57,3 +57,6 @@ See: `docs/merge-runbook.md`
 
 ## Reviewer Rotation (CODEOWNERS)
 See: `docs/reviewer-rotation.md`
+
+## Secrets Rotation
+See: `docs/runbooks/secrets-rotation.md`
