@@ -11,7 +11,7 @@ Move from Phase 1 prototype completion to a production-ready self-hosted platfor
 - [ ] P2-A1 Auth + workspace persistence
 - [x] P2-A2 Postgres-backed control-plane repositories
 - [x] P2-A3 Run timeline API backed by DB
-- [ ] P2-A4 Security tightening (secrets rotation playbook + dependency audit gate)
+- [x] P2-A4 Security tightening (secrets rotation playbook + dependency audit gate)
 
 ## Track B - Operator Experience
 
@@ -33,3 +33,15 @@ Move from Phase 1 prototype completion to a production-ready self-hosted platfor
 - Added `ControlPlaneStore` repository interface with `InMemoryStore` and `PostgresStore` implementations.
 - Wired `@asdev/web` server context to select store backend via `CONTROL_PLANE_STORE` / `DATABASE_URL`.
 - Added migration `0002_run_updated_at` and aligned `prisma/schema.prisma` for persistent run timeline updates.
+
+## PR-2 Notes
+
+- Added admin run controls endpoints: `GET /admin/runs/timeline` and `POST /admin/runs/retry`.
+- Added workflow-aware filtering for `GET /admin/runs`.
+- Added endpoint integration coverage in `apps/web/tests/server-runs.test.ts`.
+
+## PR-3 Notes
+
+- Added secrets rotation runbook at `docs/runbooks/secrets-rotation.md`.
+- Linked security baseline and self-host runbook to the rotation process.
+- Kept dependency audit gate active in CI (`.github/workflows/ci.yml` -> `Dependency audit` step).
