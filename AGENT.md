@@ -1,7 +1,7 @@
-# asdev_lap Agent Guide
+# asdev-automation-hub Agent Guide
 
 ## Identity & Mission
-- Repository: `asdev_lap`
+- Repository: `asdev-automation-hub`
 - Mission: Deliver a local-first automation platform with strict quality and traceable governance.
 - High-risk domains: auth/RBAC, secrets handling, payment actions, workflow execution correctness.
 
