@@ -11,6 +11,7 @@ Move from Phase 1 prototype delivery to a production-ready self-hosted platform 
 2. Postgres-backed control-plane repositories
 3. Run-level observability (timeline API backed by DB)
 4. Security tightening (secrets rotation playbook, dependency audit gate)
+5. Execution board: `docs/backlog/phase-2-kickoff.md`
 
 Definition of done:
 - Strict TS/lint/tests/build pass
