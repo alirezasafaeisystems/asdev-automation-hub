@@ -9,8 +9,8 @@ Move from Phase 1 prototype completion to a production-ready self-hosted platfor
 ## Track A - Platform Hardening
 
 - [ ] P2-A1 Auth + workspace persistence
-- [ ] P2-A2 Postgres-backed control-plane repositories
-- [ ] P2-A3 Run timeline API backed by DB
+- [x] P2-A2 Postgres-backed control-plane repositories
+- [x] P2-A3 Run timeline API backed by DB
 - [ ] P2-A4 Security tightening (secrets rotation playbook + dependency audit gate)
 
 ## Track B - Operator Experience
@@ -21,9 +21,15 @@ Move from Phase 1 prototype completion to a production-ready self-hosted platfor
 
 ## Definition of Done
 
-- [ ] `pnpm lint` passes
-- [ ] `pnpm typecheck` passes
-- [ ] `pnpm test` passes
-- [ ] `pnpm build` passes
+- [x] `pnpm lint` passes
+- [x] `pnpm typecheck` passes
+- [x] `pnpm test` passes
+- [x] `pnpm build` passes
 - [ ] Admin APIs documented with request/response examples
 - [ ] E2E smoke validates template installation and a full run
+
+## PR-1 Notes
+
+- Added `ControlPlaneStore` repository interface with `InMemoryStore` and `PostgresStore` implementations.
+- Wired `@asdev/web` server context to select store backend via `CONTROL_PLANE_STORE` / `DATABASE_URL`.
+- Added migration `0002_run_updated_at` and aligned `prisma/schema.prisma` for persistent run timeline updates.

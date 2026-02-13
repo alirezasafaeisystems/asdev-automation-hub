@@ -16,6 +16,9 @@ pnpm ci
 ```bash
 export SECRET_KEY="<32+ char secret>"
 export ADMIN_API_TOKEN="<strong-admin-token>"
+# Optional: enable Postgres-backed control-plane persistence
+# export CONTROL_PLANE_STORE="postgres"
+# export DATABASE_URL="postgresql://asdev:asdev@localhost:5432/asdev_lap"
 pnpm --filter @asdev/web dev
 pnpm --filter @asdev/runner dev
 ```
