@@ -1,4 +1,4 @@
-# asdev_lap
+# asdev-automation-hub
 
 Local-first, self-hosted automation platform (Zapier IR Lite) aligned with ASDEV standards.
 
